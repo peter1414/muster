@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Log In — Muster{% endblock %}
+{% block content %}
+<div class="auth-card">
+  <div class="section-label">Report In</div>
+  <h1 class="section-title">Log in to your muster log.</h1>
+  <form method="POST" class="form-stack">
+    <label>
+      <span>Username</span>
+      <input type="text" name="username" autocomplete="username" required autofocus>
+    </label>
+    <label>
+      <span>Password</span>
+      <input type="password" name="password" autocomplete="current-password" required>
+    </label>
+    <button type="submit" class="btn-primary full">Log In</button>
+  </form>
+  <p class="auth-switch">No account yet? <a href="{{ url_for('register') }}">Create one</a></p>
+</div>
+{% endblock %}

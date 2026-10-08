@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}Dashboard — Muster{% endblock %}
+{% block content %}
+
+<div class="page-head">
+  <div>
+    <div class="section-label">Muster Log</div>
+    <h1 class="section-title">Where you stand against the standard.</h1>
+  </div>
+  <a href="{{ url_for('log_entry') }}" class="btn-primary">+ Log Entry</a>
+</div>
+
+{% if total_entries == 0 %}
+<div class="empty-state">
+  <p>No entries logged yet. Report your first PST numbers to start tracking against the standard.</p>
+  <a href="{{ url_for('log_entry') }}" class="btn-primary">Log Your First Entry</a>
+</div>
+{% else %}
+
+<div class="card-grid">
+  {% for card in cards %}
+  <div class="std-card">
+    <div class="std-card-head">
+      <h3>{{ card.label }}</h3>
+      {% if card.entry %}
+        <span class="tier-tag tier-{{ card.tier }}">{{ card.tier.replace('_', ' ') }}</span>
+      {% endif %}
+    </div>
+
+    {% if card.entry %}
+      <div class="std-value">{{ card.display_value }}<span class="std-unit">{{ card.unit_suffix }}</span></div>
+      <div class="bar-track">
+        <div class="bar-fill tier-{{ card.tier }}" style="width: {{ card.ratio }}%;"></div>
+      </div>
+      <div class="std-lines">
+        <span>Min: {{ card.min_display }}</span>
+        <span>Competitive: {{ card.competitive_display }}</span>
+        <span>Max: {{ card.max_display }}</span>
+      </div>
+      <div class="std-date">Last logged {{ card.entry.entry_date.strftime('%b %d, %Y') }}</div>
+    {% else %}
+      <p class="std-empty">No entries yet for this event.</p>
+      <div class="std-lines std-lines-empty">
+        <span>Min: {{ card.min_display }}</span>
+        <span>Competitive: {{ card.competitive_display }}</span>
+        <span>Max: {{ card.max_display }}</span>
+      </div>
+    {% endif %}
+  </div>
+  {% endfor %}
+</div>
+
+{% endif %}
+
+{% endblock %}

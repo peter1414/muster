@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}History — Muster{% endblock %}
+{% block content %}
+
+<div class="page-head">
+  <div>
+    <div class="section-label">Full Record</div>
+    <h1 class="section-title">Every entry, logged.</h1>
+  </div>
+  <a href="{{ url_for('log_entry') }}" class="btn-primary">+ Log Entry</a>
+</div>
+
+{% if rows %}
+<table class="std-table">
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Event</th>
+      <th>Value</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for row in rows %}
+    <tr>
+      <td>{{ row.entry.entry_date.strftime('%b %d, %Y') }}</td>
+      <td>{{ row.label }}</td>
+      <td>{{ row.display_value }}</td>
+      <td class="muted">{{ row.entry.notes or '—' }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<div class="empty-state">
+  <p>Nothing logged yet.</p>
+  <a href="{{ url_for('log_entry') }}" class="btn-primary">Log Your First Entry</a>
+</div>
+{% endif %}
+
+{% endblock %}

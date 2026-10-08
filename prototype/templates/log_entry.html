@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Log Entry — Muster{% endblock %}
+{% block content %}
+
+<div class="section-label">New Entry</div>
+<h1 class="section-title">Report a number.</h1>
+
+<form method="POST" class="form-stack log-form">
+  <label>
+    <span>Event</span>
+    <select name="exercise" required>
+      {% for key in exercise_order %}
+        <option value="{{ key }}">{{ standards[key].label }}</option>
+      {% endfor %}
+    </select>
+  </label>
+
+  <label>
+    <span>Value</span>
+    <input type="text" name="value" placeholder="e.g. 88, or 9:45 for a timed event" required>
+    <small>Reps events: enter a whole number. Timed events (run/swim): enter mm:ss.</small>
+  </label>
+
+  <label>
+    <span>Date</span>
+    <input type="date" name="entry_date" value="{{ today }}">
+  </label>
+
+  <label>
+    <span>Notes (optional)</span>
+    <textarea name="notes" rows="3" maxlength="280" placeholder="Conditions, how it felt, anything worth remembering."></textarea>
+  </label>
+
+  <button type="submit" class="btn-primary full">Log Entry</button>
+</form>
+
+{% endblock %}
