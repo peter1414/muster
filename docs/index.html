@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MUSTER — Train to the Standard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --deck: #14171A;
+    --deck-dark: #0E1012;
+    --ink: #14171A;
+    --manila: #E9E4D8;
+    --manila-dim: #D9D2C0;
+    --brass: #C9A961;
+    --brass-bright: #DDC07E;
+    --signal: #5B93A6;
+    --signal-bright: #7FB0C2;
+    --oxide: #B4483A;
+    --olive: #5C6450;
+    --paper-line: rgba(20,23,26,0.10);
+    --steel-line: rgba(233,228,216,0.12);
+
+    --font-display: 'Space Grotesk', sans-serif;
+    --font-mono: 'IBM Plex Mono', monospace;
+    --font-body: 'Inter', sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--deck);
+    color: var(--manila);
+    font-family: var(--font-body);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: inherit; }
+
+  .wrap {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  /* ---------- NAV ---------- */
+  header.nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(27,31,34,0.92);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--steel-line);
+  }
+  .nav-inner {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 18px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .wordmark {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 22px;
+    letter-spacing: 0.14em;
+    color: var(--manila);
+  }
+  .wordmark span { color: var(--brass-bright); }
+  nav.links { display: flex; gap: 32px; }
+  nav.links a {
+    text-decoration: none;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--manila-dim);
+    opacity: 0.85;
+    transition: opacity 0.2s ease, color 0.2s ease;
+  }
+  nav.links a:hover, nav.links a:focus-visible { opacity: 1; color: var(--brass-bright); }
+  .nav-cta {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    background: var(--brass);
+    color: var(--ink);
+    padding: 9px 18px;
+    border-radius: 2px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background 0.2s ease;
+    border: 1px solid var(--brass);
+  }
+  .nav-cta:hover, .nav-cta:focus-visible { background: var(--brass-bright); }
+
+  @media (max-width: 720px) {
+    nav.links { display: none; }
+    .wrap, .nav-inner { padding-left: 16px; padding-right: 16px; }
+    .stage { grid-template-columns: 1fr; gap: 6px; }
+    table.std-table { font-size: 12px; }
+    table.std-table th, table.std-table td { padding: 10px 6px; }
+  }
+
+  /* ---------- HERO ---------- */
+  .hero {
+    padding: 88px 0 96px;
+    position: relative;
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 85% -10%, rgba(184,145,47,0.10), transparent 45%),
+      var(--deck);
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 56px;
+    align-items: center;
+  }
+  @media (max-width: 900px) {
+    .hero-grid { grid-template-columns: 1fr; }
+  }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--brass-bright);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 22px;
+  }
+  .eyebrow::before {
+    content: '';
+    width: 22px;
+    height: 1px;
+    background: var(--brass-bright);
+  }
+
+  h1.headline {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(40px, 5.6vw, 68px);
+    line-height: 1.04;
+    letter-spacing: -0.01em;
+    color: var(--manila);
+  }
+  h1.headline em {
+    font-style: normal;
+    color: var(--brass-bright);
+  }
+
+  .hero-sub {
+    margin-top: 24px;
+    font-size: 18px;
+    color: var(--manila-dim);
+    max-width: 46ch;
+    line-height: 1.65;
+  }
+
+  .hero-actions {
+    margin-top: 36px;
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .btn-primary {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    background: var(--brass);
+    color: var(--ink);
+    padding: 15px 26px;
+    border-radius: 2px;
+    text-decoration: none;
+    font-weight: 600;
+    border: 1px solid var(--brass);
+    transition: transform 0.15s ease, background 0.2s ease;
+  }
+  .btn-primary:hover, .btn-primary:focus-visible { background: var(--brass-bright); transform: translateY(-1px); }
+
+  .btn-ghost {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--manila-dim);
+    text-decoration: none;
+    padding: 15px 4px;
+    border-bottom: 1px solid var(--steel-line);
+    transition: color 0.2s ease, border-color 0.2s ease;
+  }
+  .btn-ghost:hover, .btn-ghost:focus-visible { color: var(--brass-bright); border-color: var(--brass-bright); }
+
+  /* ---------- LOG CARD (signature element) ---------- */
+  .log-card {
+    background: var(--manila);
+    color: var(--ink);
+    border-radius: 4px;
+    padding: 28px 26px 24px;
+    box-shadow: 0 20px 48px rgba(0,0,0,0.28);
+    position: relative;
+    border-top: 2px solid var(--brass);
+  }
+  .log-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 1px solid var(--paper-line);
+    padding-bottom: 10px;
+    margin-bottom: 14px;
+  }
+  .log-title {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--olive);
+  }
+  .log-date {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--olive);
+    opacity: 0.8;
+  }
+  .log-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--paper-line);
+    font-family: var(--font-mono);
+    font-size: 13px;
+  }
+  .log-row:last-child { border-bottom: none; }
+  .log-label { color: var(--ink); opacity: 0.75; }
+  .log-value { font-weight: 600; display: flex; align-items: center; gap: 7px; }
+  .stamp {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.03em;
+    color: var(--olive);
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .stamp::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--signal);
+  }
+  .stamp.pending::before {
+    background: var(--brass);
+  }
+
+  /* ---------- SECTION SHARED ---------- */
+  section { padding: 84px 0; }
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--brass-bright);
+    margin-bottom: 14px;
+  }
+  h2.section-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(26px, 3.2vw, 36px);
+    letter-spacing: -0.01em;
+    max-width: 20ch;
+    margin-bottom: 18px;
+  }
+  .section-copy {
+    color: var(--manila-dim);
+    max-width: 62ch;
+    font-size: 16px;
+  }
+
+  /* ---------- PROBLEM ---------- */
+  .problem { background: var(--deck-dark); border-top: 1px solid var(--steel-line); border-bottom: 1px solid var(--steel-line); }
+  .problem-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+    margin-top: 44px;
+  }
+  @media (max-width: 800px) { .problem-grid { grid-template-columns: 1fr; } }
+  .problem-card {
+    border: 1px solid var(--steel-line);
+    padding: 26px;
+    border-radius: 3px;
+  }
+  .problem-card .mark {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--oxide);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: block;
+  }
+  .problem-card h3 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 18px;
+    letter-spacing: -0.005em;
+    margin-bottom: 10px;
+  }
+  .problem-card p { color: var(--manila-dim); font-size: 14.5px; }
+
+  /* ---------- PROGRAM ---------- */
+  .stages {
+    margin-top: 48px;
+    display: flex;
+    flex-direction: column;
+  }
+  .stage {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 24px;
+    padding: 26px 0;
+    border-top: 1px solid var(--steel-line);
+  }
+  .stage:last-child { border-bottom: 1px solid var(--steel-line); }
+  .stage-num {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--brass-bright);
+    letter-spacing: 0.05em;
+  }
+  .stage h3 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 19px;
+    margin-bottom: 8px;
+  }
+  .stage p { color: var(--manila-dim); font-size: 15px; max-width: 58ch; }
+
+  /* ---------- STANDARDS TABLE ---------- */
+  .standards { background: var(--manila); color: var(--ink); }
+  .standards .section-label { color: var(--oxide); }
+  .standards .section-copy { color: rgba(20,23,26,0.65); }
+  table.std-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 40px;
+    font-family: var(--font-mono);
+    font-size: 14px;
+  }
+  table.std-table th {
+    text-align: left;
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--olive);
+    padding: 12px 14px;
+    border-bottom: 2px solid var(--ink);
+  }
+  table.std-table td {
+    padding: 14px 14px;
+    border-bottom: 1px solid var(--paper-line);
+  }
+  table.std-table tr:hover td { background: rgba(184,145,47,0.08); }
+  .std-tag {
+    display: inline-block;
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    padding: 3px 7px;
+    border-radius: 2px;
+    text-transform: uppercase;
+  }
+  .std-tag.min { background: rgba(180,72,58,0.10); color: var(--oxide); }
+  .std-tag.comp { background: rgba(91,147,166,0.14); color: #2f6273; }
+  .std-tag.max { background: rgba(201,169,97,0.18); color: #8a6a1f; }
+
+  /* ---------- FOUNDER LOG ---------- */
+  .founder {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 56px;
+    align-items: start;
+  }
+  @media (max-width: 860px) { .founder { grid-template-columns: 1fr; } }
+  .founder-quote {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(21px, 2.4vw, 28px);
+    line-height: 1.32;
+    letter-spacing: -0.005em;
+    border-left: 2px solid var(--brass);
+    padding-left: 22px;
+  }
+  .founder-body p { color: var(--manila-dim); margin-bottom: 16px; font-size: 15.5px; }
+  .founder-tag {
+    margin-top: 22px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--brass-bright);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  /* ---------- CTA ---------- */
+  .cta {
+    background: var(--deck-dark);
+    border-top: 1px solid var(--steel-line);
+    text-align: center;
+  }
+  .cta .wrap { max-width: 640px; }
+  .cta h2 { margin-bottom: 14px; }
+  .cta p.section-copy { margin: 0 auto 32px; }
+  form.signup {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  form.signup input[type="email"] {
+    flex: 1 1 260px;
+    background: transparent;
+    border: 1px solid var(--steel-line);
+    color: var(--manila);
+    padding: 15px 16px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    border-radius: 2px;
+  }
+  form.signup input[type="email"]::placeholder { color: rgba(237,230,214,0.45); }
+  form.signup input[type="email"]:focus-visible { outline: 2px solid var(--brass-bright); outline-offset: 2px; }
+  form.signup button {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    background: var(--brass);
+    color: var(--ink);
+    padding: 15px 24px;
+    border-radius: 2px;
+    border: 1px solid var(--brass);
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+  form.signup button:hover, form.signup button:focus-visible { background: var(--brass-bright); }
+  .form-note {
+    margin-top: 16px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--manila-dim);
+    opacity: 0.7;
+  }
+  .form-success {
+    display: none;
+    margin-top: 20px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--brass-bright);
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer {
+    padding: 32px 0;
+    border-top: 1px solid var(--steel-line);
+  }
+  .footer-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .footer-row .wordmark { font-size: 16px; }
+  footer p {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--manila-dim);
+    opacity: 0.6;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { transition: none !important; animation: none !important; }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <div class="wordmark">MUS<span>TER</span></div>
+    <nav class="links">
+      <a href="#problem">The Gap</a>
+      <a href="#program">The Program</a>
+      <a href="#standards">The Standards</a>
+      <a href="#founder">Founder's Log</a>
+    </nav>
+    <a class="nav-cta" href="#cta">Request Access</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">Selection-standard training</div>
+      <h1 class="headline">Train to<br>the <em>standard</em>,<br>not a template.</h1>
+      <p class="hero-sub">A structured training log built for NSW/SOAS, BUD/S, SFAS, and tactical PFT prep — programmed and field-tested by a midshipman building his own selection package in real time.</p>
+      <div class="hero-actions">
+        <a class="btn-primary" href="#cta">Request Early Access</a>
+        <a class="btn-ghost" href="#program">See the 12-week block →</a>
+      </div>
+    </div>
+    <div class="log-card reveal in">
+      <div class="log-head">
+        <span class="log-title">Muster Log — Week 07</span>
+        <span class="log-date">Entry 049</span>
+      </div>
+      <div class="log-row">
+        <span class="log-label">Push-ups (2 min)</span>
+        <span class="log-value">88 <span class="stamp">competitive</span></span>
+      </div>
+      <div class="log-row">
+        <span class="log-label">Pull-ups, dead hang</span>
+        <span class="log-value">11 <span class="stamp pending">building</span></span>
+      </div>
+      <div class="log-row">
+        <span class="log-label">1.5 mi run</span>
+        <span class="log-value">9:52 <span class="stamp">competitive</span></span>
+      </div>
+      <div class="log-row">
+        <span class="log-label">500m swim (CSS)</span>
+        <span class="log-value">9:40 <span class="stamp pending">building</span></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="problem" id="problem">
+  <div class="wrap">
+    <div class="section-label">The Gap</div>
+    <h2 class="section-title">Selection prep runs on borrowed credibility.</h2>
+    <p class="section-copy">Most candidates cobble together their training from generic fitness influencers who've never seen a PST scoresheet, or from decade-old PDFs passed around a unit with no structure or progression. There's no system built by someone in the pipeline, tracking the actual standards, in real time.</p>
+    <div class="problem-grid">
+      <div class="problem-card">
+        <span class="mark">Problem 1</span>
+        <h3>No real standard-tracking</h3>
+        <p>Apps track reps and miles. They don't track you against the actual minimum, competitive, and max lines a board is scoring you on.</p>
+      </div>
+      <div class="problem-card">
+        <span class="mark">Problem 2</span>
+        <h3>Generic programming</h3>
+        <p>Selection demands strength, swim, ruck, and run capacity at once. Most programs are built for one discipline and bolt the rest on badly.</p>
+      </div>
+      <div class="problem-card">
+        <span class="mark">Problem 3</span>
+        <h3>Zero proof-of-work</h3>
+        <p>Anyone can sell a PDF. Almost nobody selling one is training to the same standard, on the same clock, right now.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="program">
+  <div class="wrap">
+    <div class="section-label">The Program</div>
+    <h2 class="section-title">A 12-week block, built the way it's actually trained.</h2>
+    <p class="section-copy">Strength, conditioning, swim, and mental preparation, periodized together — not four separate apps stitched into one routine.</p>
+    <div class="stages">
+      <div class="stage">
+        <div class="stage-num">01 / Weeks 1–4</div>
+        <div>
+          <h3>Base &amp; Standard Check</h3>
+          <p>Establish current PST numbers against the minimum, competitive, and max standard lines. Build aerobic base and foundational strength while correcting the biggest single limiter first.</p>
+        </div>
+      </div>
+      <div class="stage">
+        <div class="stage-num">02 / Weeks 5–8</div>
+        <div>
+          <h3>Load &amp; Capacity</h3>
+          <p>Increase strength and swim/run capacity concurrently. Weekly log entries track trend lines, not just single workouts — so drift gets caught early.</p>
+        </div>
+      </div>
+      <div class="stage">
+        <div class="stage-num">03 / Weeks 9–12</div>
+        <div>
+          <h3>Peak &amp; Board-Ready</h3>
+          <p>Taper volume, sharpen test-day pacing, and lock in the mental preparation framework for the day the numbers actually count.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="standards" id="standards">
+  <div class="wrap">
+    <div class="section-label">The Standards</div>
+    <h2 class="section-title">Trained against the line that's actually scored.</h2>
+    <p class="section-copy">Every log entry is measured against three lines — minimum, competitive, and max — so you always know exactly where you stand against the board, not just against yesterday.</p>
+    <table class="std-table">
+      <thead>
+        <tr>
+          <th>Event</th>
+          <th>Minimum</th>
+          <th>Competitive</th>
+          <th>Max</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Push-ups (2 min)</td>
+          <td><span class="std-tag min">50</span></td>
+          <td><span class="std-tag comp">80+</span></td>
+          <td><span class="std-tag max">100</span></td>
+        </tr>
+        <tr>
+          <td>Sit-ups (2 min)</td>
+          <td><span class="std-tag min">60</span></td>
+          <td><span class="std-tag comp">85+</span></td>
+          <td><span class="std-tag max">100</span></td>
+        </tr>
+        <tr>
+          <td>Pull-ups, dead hang</td>
+          <td><span class="std-tag min">6</span></td>
+          <td><span class="std-tag comp">15+</span></td>
+          <td><span class="std-tag max">20</span></td>
+        </tr>
+        <tr>
+          <td>1.5 mile run</td>
+          <td><span class="std-tag min">10:30</span></td>
+          <td><span class="std-tag comp">9:00</span></td>
+          <td><span class="std-tag max">8:15</span></td>
+        </tr>
+        <tr>
+          <td>500m swim</td>
+          <td><span class="std-tag min">12:30</span></td>
+          <td><span class="std-tag comp">9:30</span></td>
+          <td><span class="std-tag max">8:00</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="founder">
+  <div class="wrap founder">
+    <div class="founder-quote">Built by someone on the same clock, not a coach three years removed.</div>
+    <div class="founder-body">
+      <p>Muster started as my own training log — the system I built to prep a SOAS package while balancing NROTC, lacrosse, and a full engineering course load. Every standard line, every week structure, every log entry format was tested on myself first.</p>
+      <p>Nothing here is theoretical. The 12-week block is the same one I run. The standards are the ones I'm training against. When it says "competitive," that's the number I'm chasing too.</p>
+      <div class="founder-tag">— Founder, Muster</div>
+    </div>
+  </div>
+</section>
+
+<section class="cta" id="cta">
+  <div class="wrap">
+    <div class="section-label">Get Access</div>
+    <h2 class="section-title">Reporting for the first cohort.</h2>
+    <p class="section-copy">Early access includes the full 12-week program and a founding price locked in before the public launch.</p>
+    <form class="signup" id="signupForm">
+      <input type="email" id="emailInput" placeholder="you@email.com" required aria-label="Email address">
+      <button type="submit">Request Access</button>
+    </form>
+    <p class="form-note">Opens an email to the founder. No spam — one email when the first cohort opens.</p>
+    <p class="form-success" id="formSuccess">Send that email and you're on the muster roll.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-row">
+    <div class="wordmark">MUS<span>TER</span></div>
+    <p>© 2026 Muster Training. Built for those preparing to be selected.</p>
+  </div>
+</footer>
+
+<script>
+  // Simple waitlist form handling (front-end only placeholder)
+  const form = document.getElementById('signupForm');
+  const success = document.getElementById('formSuccess');
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const email = document.getElementById('emailInput').value;
+    window.location.href = 'mailto:kellyp5@rpi.edu?subject=' + encodeURIComponent('Muster early access') +
+      '&body=' + encodeURIComponent('Please add me to the Muster early-access list: ' + email);
+    success.style.display = 'block';
+  });
+
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.problem-card, .stage, table.std-table');
+  revealEls.forEach(el => el.classList.add('reveal'));
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
